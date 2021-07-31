@@ -1,0 +1,70 @@
+spring:
+  application.name: order-service
+  output.ansi.enabled: always
+
+server:
+  port: 7070
+
+management.endpoints.web.exposure.include: '*'
+management.endpoint.health.show-details: always
+
+# Spring actuator 에 circuitbreaker 정보를 표시하기 위한 설정
+management.health.circuitbreakers.enabled: true
+
+#----------------------------------------------------------------------------------------------
+# CircuitBreaker COUNT_BASED Configuration
+#----------------------------------------------------------------------------------------------
+# 1. STATUS: OPEN 으로 변경되는 경우
+#    - minimumNumberOfCells = 6 이고 failureRateThreshold = 50% 이상인경우 이므로 payment-service
+#     호출을 6번 중에 4번실패하는 경우
+#    - minimumNumberOfCalls 이 slidingWindowSize 보다 큰 경우 slidingWindowSize 기준으로 실패율이
+#      계산된다.
+#
+# 2. STATUS: HALF_OPEN 으로 변경되는 경우
+#    - waitDurationInOpenState 가 30초로 설정 되어있기 때문에 OPEN 상태에서 30초후 HALF_OPEN 으로 변경
+#
+# 3. STATUS: CLOSED 으로 변경되는 경우
+#    - permittedNumberOfCallsInHalfOpenState = 5 로 설정 되어 있기 때문에 HALF_OPEN 상태에서
+#      payment-service 가 성공/실패 상관 없이 5번 호출 되는 경우
+# ---------------------------------------------------------------------------------------------
+#resilience4j:
+# circuitbreaker:
+#    instances:
+#      orderService:
+#        registerHealthIndicator: true
+#        slidingWindowSize: 10
+#        permittedNumberOfCallsInHalfOpenState: 5
+#        slidingWindowType: COUNT_BASED
+#        minimumNumberOfCalls: 6
+#        failureRateThreshold: 50
+#        waitDurationInOpenState: 30s
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#        eventConsumerBufferSize: 10
+
+#----------------------------------------------------------------------------------------------
+# CircuitBreaker TIME_BASED Configuration
+#----------------------------------------------------------------------------------------------
+# 1. STATUS: OPEN 으로 변경되는 경우
+#    - slidingWindowSize 값이 10으로 설정 되어 있으므로 10초동안 6번이상 호출되고 payment-service 호출
+#      실패가 50% 이상인 경우
+#
+# 2. STATUS: HALF_OPEN 으로 변경되는 경우
+#    - waitDurationInOpenState 가 30초로 설정 되어있기 때문에 OPEN 상태에서 30초후 HALF_OPEN 으로 변경
+#
+# 3. STATUS: CLOSED 으로 변경되는 경우
+#    - permittedNumberOfCallsInHalfOpenState = 5 로 설정 되어 있기 때문에 HALF_OPEN 상태에서
+#      payment-service 가 성공/실패 상관 없이 5번 호출 되는 경우
+# ---------------------------------------------------------------------------------------------
+resilience4j:
+  circuitbreaker:
+    instances:
+      orderService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        slidingWindowType: TIME_BASED
+        minimumNumberOfCalls: 6
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        eventConsumerBufferSize: 10

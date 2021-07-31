@@ -1,0 +1,6 @@
+spring:
+  application.name: payment-service
+  output.ansi.enabled: always
+
+server:
+  port: 7071
