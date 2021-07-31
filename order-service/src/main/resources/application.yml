@@ -27,19 +27,19 @@ management.health.circuitbreakers.enabled: true
 #    - permittedNumberOfCallsInHalfOpenState = 5 로 설정 되어 있기 때문에 HALF_OPEN 상태에서
 #      payment-service 가 성공/실패 상관 없이 5번 호출 되는 경우
 # ---------------------------------------------------------------------------------------------
-#resilience4j:
-# circuitbreaker:
-#    instances:
-#      orderService:
-#        registerHealthIndicator: true
-#        slidingWindowSize: 10
-#        permittedNumberOfCallsInHalfOpenState: 5
-#        slidingWindowType: COUNT_BASED
-#        minimumNumberOfCalls: 6
-#        failureRateThreshold: 50
-#        waitDurationInOpenState: 30s
-#        automaticTransitionFromOpenToHalfOpenEnabled: true
-#        eventConsumerBufferSize: 10
+resilience4j:
+  circuitbreaker:
+    instances:
+      orderService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        permittedNumberOfCallsInHalfOpenState: 5
+        slidingWindowType: COUNT_BASED
+        minimumNumberOfCalls: 6
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        eventConsumerBufferSize: 10
 
 #----------------------------------------------------------------------------------------------
 # CircuitBreaker TIME_BASED Configuration
@@ -55,16 +55,16 @@ management.health.circuitbreakers.enabled: true
 #    - permittedNumberOfCallsInHalfOpenState = 5 로 설정 되어 있기 때문에 HALF_OPEN 상태에서
 #      payment-service 가 성공/실패 상관 없이 5번 호출 되는 경우
 # ---------------------------------------------------------------------------------------------
-resilience4j:
-  circuitbreaker:
-    instances:
-      orderService:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        permittedNumberOfCallsInHalfOpenState: 5
-        slidingWindowType: TIME_BASED
-        minimumNumberOfCalls: 6
-        failureRateThreshold: 50
-        waitDurationInOpenState: 30s
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        eventConsumerBufferSize: 10
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      orderService:
+#        registerHealthIndicator: true
+#        slidingWindowSize: 10
+#        permittedNumberOfCallsInHalfOpenState: 5
+#        slidingWindowType: TIME_BASED
+#        minimumNumberOfCalls: 6
+#        failureRateThreshold: 50
+#        waitDurationInOpenState: 30s
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#        eventConsumerBufferSize: 10

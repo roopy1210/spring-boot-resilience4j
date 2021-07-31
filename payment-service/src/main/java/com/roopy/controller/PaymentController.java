@@ -8,7 +8,7 @@ public class PaymentController {
 
     @GetMapping(value = "/pay")
     public String makePay() {
-        return "Order is completed";
+        return "주문 결제가 정상적으로 처리 되었습니다.";
     }
 
 }
