@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     @Autowired
-    private OrderService orderService;
+    private OrderService circuitBreakerService;
 
-    @GetMapping(value = "/order")
-    public ResponseEntity<String> makeOrder() {
-        return new ResponseEntity<>(orderService.makeOrder(), HttpStatus.OK);
+    @GetMapping(value = "/order/circuitbreaker")
+    public ResponseEntity<String> makeOrderForCircuitBreaker() {
+        return new ResponseEntity<>(circuitBreakerService.makeOrder(), HttpStatus.OK);
     }
 
 }
