@@ -68,3 +68,14 @@ resilience4j:
 #        waitDurationInOpenState: 30s
 #        automaticTransitionFromOpenToHalfOpenEnabled: true
 #        eventConsumerBufferSize: 10
+
+#----------------------------------------------------------------------------------------------
+# Retry Configuration
+#----------------------------------------------------------------------------------------------
+# 설정의 의미는 총 30초 동안 10초 간격으로 서비스 호출을 3번 한다는 의미이다.
+#----------------------------------------------------------------------------------------------
+  retry:
+    instances:
+      orderService:
+        maxRetryAttempts: 3
+        waitDuration: 10s
