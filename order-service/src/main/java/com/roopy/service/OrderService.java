@@ -1,7 +1,9 @@
 package com.roopy.service;
 
+import java.util.HashMap;
+
 public interface OrderService {
 
-    public String makeOrder();
+    public HashMap<String,String> makeOrder();
 
 }

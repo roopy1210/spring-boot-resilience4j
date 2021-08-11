@@ -79,3 +79,13 @@ resilience4j:
       orderService:
         maxRetryAttempts: 3
         waitDuration: 10s
+
+
+  #----------------------------------------------------------------------------------------------
+  # SemaphoreBulkhead Configuration
+  #----------------------------------------------------------------------------------------------
+  bulkhead:
+    instances:
+      orderService:
+#        maxWaitDuration: 10ms
+        maxConcurrentCalls: 5
