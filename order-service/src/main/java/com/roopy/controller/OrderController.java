@@ -32,14 +32,7 @@ public class OrderController {
      */
     @GetMapping(value = "/order/circuitbreaker")
     public ResponseEntity<String> makeOrderForCircuitBreaker() {
-
-        HashMap<String,String> resultMap = circuitBreakerService.makeOrder();
-
-        if (!"S".equals(resultMap.get("code"))) {
-           return new ResponseEntity<>(resultMap.get("msg"), HttpStatus.SERVICE_UNAVAILABLE);
-        }
-
-        return new ResponseEntity<>(resultMap.get("msg"), HttpStatus.OK);
+        return circuitBreakerService.makeOrder();
     }
 
     /**
@@ -49,13 +42,7 @@ public class OrderController {
      */
     @GetMapping(value = "/order/retry")
     public ResponseEntity<String> makeOrderForRetry() {
-        HashMap<String,String> resultMap = retryService.makeOrder();
-
-        if (!"S".equals(resultMap.get("code"))) {
-            return new ResponseEntity<>(resultMap.get("msg"), HttpStatus.SERVICE_UNAVAILABLE);
-        }
-
-        return new ResponseEntity<>(resultMap.get("msg"), HttpStatus.OK);
+        return retryService.makeOrder();
     }
 
     /**
@@ -65,13 +52,7 @@ public class OrderController {
      */
     @GetMapping(value = "/order/bulkhead")
     public ResponseEntity<String> makeOrderForBulkhead() {
-        HashMap<String,String> resultMap = bulkheadService.makeOrder();
-
-        if (!"S".equals(resultMap.get("code"))) {
-            return new ResponseEntity<>(resultMap.get("msg"), HttpStatus.TOO_MANY_REQUESTS);
-        }
-
-        return new ResponseEntity<>(resultMap.get("msg"), HttpStatus.OK);
+        return bulkheadService.makeOrder();
     }
 
 }

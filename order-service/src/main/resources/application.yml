@@ -87,5 +87,5 @@ resilience4j:
   bulkhead:
     instances:
       orderService:
-#        maxWaitDuration: 10ms
+        maxWaitDuration: 3000
         maxConcurrentCalls: 5

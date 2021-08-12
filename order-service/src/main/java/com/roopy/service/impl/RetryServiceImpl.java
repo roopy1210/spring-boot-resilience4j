@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,25 +27,16 @@ public class RetryServiceImpl implements OrderService {
 
     @Override
     @Retry(name = "orderService", fallbackMethod = "retryFallback")
-    public HashMap<String,String> makeOrder() {
+    public ResponseEntity<String> makeOrder() {
         logger.info("결제서비스 호출 횟수 : " + attempts++);
 
-        HashMap<String,String> resultMap = new HashMap<>();
-        resultMap.put("code", "S");
-        resultMap.put("msg", restTemplate.getForObject("http://localhost:7071/pay", String.class));
-
-        return resultMap;
+        return new ResponseEntity<>(restTemplate.getForObject("http://localhost:7071/pay", String.class), HttpStatus.OK);
     }
 
-    public HashMap<String,String> retryFallback(Throwable t) {
+    public ResponseEntity<String> retryFallback(Throwable t) {
         attempts = 1;
-
         logger.error("Fallback Execution For Retry, cause - {}", t.toString());
 
-        HashMap<String,String> resultMap = new HashMap<>();
-        resultMap.put("code", "E");
-        resultMap.put("msg", "결제서비스 호출 중 오류가 발생 하였습니다.");
-
-        return resultMap;
+        return new ResponseEntity<>("결제 처리 중 오류가 발생하였습니다.", HttpStatus.SERVICE_UNAVAILABLE);
     }
 }

@@ -1,9 +1,11 @@
 package com.roopy.service;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.HashMap;
 
 public interface OrderService {
 
-    public HashMap<String,String> makeOrder();
+    public ResponseEntity<String> makeOrder();
 
 }
