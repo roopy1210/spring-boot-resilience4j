@@ -80,12 +80,21 @@ resilience4j:
         maxRetryAttempts: 3
         waitDuration: 10s
 
+#----------------------------------------------------------------------------------------------
+# SemaphoreBulkhead Configuration
+#----------------------------------------------------------------------------------------------
+#  bulkhead:
+#    instances:
+#      orderService:
+#        maxWaitDuration: 5000
+#        maxConcurrentCalls: 5
 
-  #----------------------------------------------------------------------------------------------
-  # SemaphoreBulkhead Configuration
-  #----------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------
+# FixedThreadPoolBulkhead Configuration
+#----------------------------------------------------------------------------------------------
   bulkhead:
     instances:
       orderService:
-        maxWaitDuration: 3000
-        maxConcurrentCalls: 5
+        maxThreadPoolSize: 4
+        coreThreadPoolSize: 3
+        queueCapacity: 8
