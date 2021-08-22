@@ -28,18 +28,18 @@ management.health.circuitbreakers.enabled: true
 #      payment-service 가 성공/실패 상관 없이 5번 호출 되는 경우
 # ---------------------------------------------------------------------------------------------
 resilience4j:
-  circuitbreaker:
-    instances:
-      orderService:
-        registerHealthIndicator: true
-        slidingWindowSize: 10
-        permittedNumberOfCallsInHalfOpenState: 5
-        slidingWindowType: COUNT_BASED
-        minimumNumberOfCalls: 6
-        failureRateThreshold: 50
-        waitDurationInOpenState: 30s
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-        eventConsumerBufferSize: 10
+#  circuitbreaker:
+#    instances:
+#      orderService:
+#        registerHealthIndicator: true
+#        slidingWindowSize: 10
+#        permittedNumberOfCallsInHalfOpenState: 5
+#        slidingWindowType: COUNT_BASED
+#        minimumNumberOfCalls: 6
+#        failureRateThreshold: 50
+#        waitDurationInOpenState: 30s
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#        eventConsumerBufferSize: 10
 
 #----------------------------------------------------------------------------------------------
 # CircuitBreaker TIME_BASED Configuration
@@ -74,14 +74,14 @@ resilience4j:
 #----------------------------------------------------------------------------------------------
 # 설정의 의미는 총 30초 동안 10초 간격으로 서비스 호출을 3번 한다는 의미이다.
 #----------------------------------------------------------------------------------------------
-  retry:
-    instances:
-      orderService:
-        maxRetryAttempts: 3
-        waitDuration: 10s
+#  retry:
+#    instances:
+#      orderService:
+#        maxRetryAttempts: 3
+#        waitDuration: 10s
 
 #----------------------------------------------------------------------------------------------
-# SemaphoreBulkhead Configuration
+# Bulkhead SemaphoreBulkhead Configuration
 #----------------------------------------------------------------------------------------------
 #  bulkhead:
 #    instances:
@@ -90,11 +90,21 @@ resilience4j:
 #        maxConcurrentCalls: 5
 
 #----------------------------------------------------------------------------------------------
-# FixedThreadPoolBulkhead Configuration
+# Bulkhead FixedThreadPoolBulkhead Configuration
 #----------------------------------------------------------------------------------------------
-  bulkhead:
+#  bulkhead:
+#    instances:
+#      orderService:
+#        maxThreadPoolSize: 4
+#        coreThreadPoolSize: 3
+#        queueCapacity: 8
+
+#----------------------------------------------------------------------------------------------
+# RateLimiter Configuration
+#----------------------------------------------------------------------------------------------
+  ratelimiter:
     instances:
       orderService:
-        maxThreadPoolSize: 4
-        coreThreadPoolSize: 3
-        queueCapacity: 8
+        limitForPeriod: 5
+        limitRefreshPeriod: 1s
+        timeoutDuration: 25ms

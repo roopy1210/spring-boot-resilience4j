@@ -25,6 +25,10 @@ public class OrderController {
     @Qualifier(value = "bulkheadService")
     private OrderService bulkheadService;
 
+    @Autowired
+    @Qualifier(value = "rateLimiterService")
+    private OrderService rateLimiterService;
+
     /**
      * CircuitBreaker 테스트를 위한 메소드
      *
@@ -53,6 +57,16 @@ public class OrderController {
     @GetMapping(value = "/order/bulkhead")
     public ResponseEntity<String> makeOrderForBulkhead() {
         return bulkheadService.makeOrder();
+    }
+
+    /**
+     * RateLimiter 테스트를 위한 메소드
+     *
+     * @return 주문 처리 결과 메세지
+     */
+    @GetMapping(value = "/order/ratelimiter")
+    public ResponseEntity<String> makeOrderForRateLimiter() {
+        return rateLimiterService.makeOrder();
     }
 
 }
